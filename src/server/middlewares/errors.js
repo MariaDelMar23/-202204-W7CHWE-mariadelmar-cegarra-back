@@ -2,7 +2,7 @@ const chalk = require("chalk");
 const debug = require("debug")("kinds:server:middlewares:errors");
 
 const notFoundError = (req, res) => {
-  res.status(404).json({ error: true, message: "Endpoint not found" });
+  res.status(404).json({ message: "Endpoint not found" });
 };
 
 // eslint-disable-next-line no-unused-vars
