@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "coverage": "jest --coverage --watchAll=false",
+    "start": "node src",
+    "start-dev": "nodemon src -q",
     "prepare": "husky install"
   },
   "author": "",
@@ -17,6 +20,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "chalk": "^4.1.2",
     "cors": "^2.8.5",
     "debug": "^4.3.4",
     "dotenv": "^16.0.1",
