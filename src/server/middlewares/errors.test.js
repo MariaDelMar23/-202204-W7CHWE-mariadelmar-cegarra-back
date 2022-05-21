@@ -6,11 +6,11 @@ const res = {
 };
 describe("Given the notFoundError middleware", () => {
   describe("When it receives a response", () => {
-    test("Then it should call its methods status and json with 404 and {msg:'Endpoint not found'} respectively", async () => {
+    test("Then it should call its methods status and json with 404 and {msg:'Endpoint not found'} respectively", () => {
       const expectedStatus = 404;
       const expectedBody = { message: "Endpoint not found" };
 
-      await notFoundError(null, res);
+      notFoundError(null, res);
 
       expect(res.status).toHaveBeenCalledWith(expectedStatus);
       expect(res.json).toHaveBeenCalledWith(expectedBody);
@@ -20,7 +20,7 @@ describe("Given the notFoundError middleware", () => {
 
 describe("Given the generalError middleware", () => {
   describe("When it receives a custom error and a response", () => {
-    test("Then it should call res' status and json methods with 409 and { message: 'Incorrect username or password' } respectively", async () => {
+    test("Then it should call res' status and json methods with 409 and { message: 'Incorrect username or password' } respectively", () => {
       const error = {
         statusCode: 409,
         customMessage: "Incorrect username or password",
@@ -28,7 +28,7 @@ describe("Given the generalError middleware", () => {
       const expectedStatus = 409;
       const expectedBody = { message: "Incorrect username or password" };
 
-      await generalError(error, null, res);
+      generalError(error, null, res);
 
       expect(res.status).toHaveBeenCalledWith(expectedStatus);
       expect(res.json).toHaveBeenCalledWith(expectedBody);
@@ -36,7 +36,7 @@ describe("Given the generalError middleware", () => {
   });
 
   describe("When it receives an error and a response", () => {
-    test("Then it should call res' status and json methods with 500 and { message: 'General pete' }", async () => {
+    test("Then it should call res' status and json methods with 500 and { message: 'General pete' }", () => {
       const error = {
         status: 0,
         message: "TypeError: Could not read properties of undefined",
@@ -44,7 +44,7 @@ describe("Given the generalError middleware", () => {
       const expectedStatus = 500;
       const expectedBody = { message: "General pete" };
 
-      await generalError(error, null, res);
+      generalError(error, null, res);
 
       expect(res.status).toHaveBeenCalledWith(expectedStatus);
       expect(res.json).toHaveBeenCalledWith(expectedBody);
