@@ -21,12 +21,14 @@ const UserSchema = new Schema({
     {
       type: SchemaType.ObjectId,
       ref: "User",
+      default: [],
     },
   ],
   enemies: [
     {
       type: SchemaType.ObjectId,
       ref: "User",
+      default: [],
     },
   ],
 });
