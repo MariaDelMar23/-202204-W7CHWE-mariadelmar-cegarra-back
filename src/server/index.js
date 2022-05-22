@@ -28,7 +28,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.static("uploads"));
 
-app.use("/users", userRouter);
+app.use("/user", userRouter);
 
 app.use(notFoundError);
 app.use(generalError);
