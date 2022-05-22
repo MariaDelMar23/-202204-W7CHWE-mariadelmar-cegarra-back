@@ -1,4 +1,4 @@
-const { Schema, model, SchemaType } = require("mongoose");
+const { Schema, model, SchemaType, SchemaTypes } = require("mongoose");
 
 const UserSchema = new Schema({
   name: {
@@ -17,20 +17,14 @@ const UserSchema = new Schema({
   image: {
     type: String,
   },
-  // friends: [
-  //   {
-  //     type: SchemaType.ObjectId,
-  //     ref: "User",
-  //     default: [],
-  //   },
-  // ],
-  // enemies: [
-  //   {
-  //     type: SchemaType.ObjectId,
-  //     ref: "User",
-  //     default: [],
-  //   },
-  // ],
+  friends: {
+    type: [{ type: SchemaTypes.ObjectId, ref: "User" }],
+    default: [],
+  },
+  enemies: {
+    type: [{ type: SchemaTypes.ObjectId, ref: "User" }],
+    default: [],
+  },
 });
 
 const User = model("User", UserSchema, "users");
