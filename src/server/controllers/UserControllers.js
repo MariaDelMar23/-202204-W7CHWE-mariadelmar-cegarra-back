@@ -57,7 +57,11 @@ const registerUser = async (req, res, next) => {
     };
 
     if (file) {
-      const newFileName = `${Date.now}${file.originalname}`;
+      debug(file.originalname);
+      const newFileName = `${file.originalname.split(".")[0]}-${Date.now()}.${
+        file.originalname.split(".")[1]
+      }`;
+      debug(newFileName);
       fs.rename(
         path.join("uploads", "images", file.filename),
         path.join("uploads", "images", newFileName),
