@@ -1,4 +1,4 @@
-const { Schema, model, SchemaType, SchemaTypes } = require("mongoose");
+const { Schema, model, SchemaTypes } = require("mongoose");
 
 const UserSchema = new Schema({
   name: {
@@ -16,6 +16,7 @@ const UserSchema = new Schema({
   },
   image: {
     type: String,
+    default: "",
   },
   friends: {
     type: [{ type: SchemaTypes.ObjectId, ref: "User" }],
