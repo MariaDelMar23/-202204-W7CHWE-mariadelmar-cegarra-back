@@ -17,20 +17,20 @@ const UserSchema = new Schema({
   image: {
     type: String,
   },
-  friends: [
-    {
-      type: SchemaType.ObjectId,
-      ref: "User",
-      default: [],
-    },
-  ],
-  enemies: [
-    {
-      type: SchemaType.ObjectId,
-      ref: "User",
-      default: [],
-    },
-  ],
+  // friends: [
+  //   {
+  //     type: SchemaType.ObjectId,
+  //     ref: "User",
+  //     default: [],
+  //   },
+  // ],
+  // enemies: [
+  //   {
+  //     type: SchemaType.ObjectId,
+  //     ref: "User",
+  //     default: [],
+  //   },
+  // ],
 });
 
 const User = model("User", UserSchema, "users");
