@@ -1,7 +1,9 @@
 require("dotenv").config();
 const debug = require("debug")("redSocial:server:middlewares:loginUser");
+const fs = require("fs");
 const bcrypt = require("bcrypt");
 const chalk = require("chalk");
+const path = require("path");
 const jwt = require("jsonwebtoken");
 const User = require("../../database/models/User");
 
@@ -35,9 +37,8 @@ const loginUser = async (req, res, next) => {
 };
 
 const registerUser = async (req, res, next) => {
-  const {
-    user: { name, username, password, image },
-  } = req.body;
+  const { name, username, password } = req.body;
+  const { file } = req;
   const user = await User.findOne({ username });
 
   if (user) {
@@ -49,12 +50,31 @@ const registerUser = async (req, res, next) => {
   }
   try {
     const encryptedPassword = await bcrypt.hash(password, 10);
-    const newUser = await User.create({
+    let newUserData = {
       name,
       username,
       password: encryptedPassword,
-      image,
-    });
+    };
+
+    if (file) {
+      const newFileName = `${Date.now}${file.originalname}`;
+      fs.rename(
+        path.join("uploads", "images", file.filename),
+        path.join("uploads", "images", newFileName),
+        (error) => {
+          if (error) {
+            debug(chalk.red(error.message));
+            const customError = new Error();
+            customError.statusCode = 409;
+            customError.customMessage = "Could not rename image";
+
+            next(customError);
+          }
+        }
+      );
+      newUserData = { ...newUserData, image: path.join(newFileName) };
+    }
+    const newUser = await User.create(newUserData);
 
     res.status(201).json({ newUser });
   } catch (error) {
