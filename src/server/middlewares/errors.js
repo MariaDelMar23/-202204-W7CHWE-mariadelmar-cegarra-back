@@ -1,5 +1,5 @@
 const chalk = require("chalk");
-const debug = require("debug")("kinds:server:middlewares:errors");
+const debug = require("debug")("redSocial:server:middlewares:errors");
 
 const notFoundError = (req, res) => {
   res.status(404).json({ message: "Endpoint not found" });
