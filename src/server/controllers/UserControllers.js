@@ -34,4 +34,35 @@ const loginUser = async (req, res, next) => {
   }
 };
 
-module.exports = loginUser;
+const registerUser = async (req, res, next) => {
+  const {
+    user: { name, username, password, image },
+  } = req.body;
+  const user = await User.findOne({ username });
+
+  if (user) {
+    debug(chalk.red("User already exists"));
+    const error = new Error("User already exists");
+    error.statusCode = 409;
+
+    next(error);
+  }
+  try {
+    const encryptedPassword = await bcrypt.hash(password, 10);
+    const newUser = await User.create({
+      name,
+      username,
+      password: encryptedPassword,
+      image,
+    });
+
+    res.status(201).json({ newUser });
+  } catch (error) {
+    error.customMessage = "Couldn't create user";
+    error.statusCode = 409;
+
+    next(error);
+  }
+};
+
+module.exports = { loginUser, registerUser };
